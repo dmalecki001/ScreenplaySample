@@ -1,0 +1,17 @@
+assets/*
+!assets/.gitignore
+protected/runtime/*
+!protected/runtime/.gitignore
+protected/data/*.db
+themes/classic/views/
+/target/
+/.settings/
+.classpath
+.project
+/.idea/*
+*/.idea/*
+.idea
+*.iml
+/report/
+*/target/*
+*junit.log

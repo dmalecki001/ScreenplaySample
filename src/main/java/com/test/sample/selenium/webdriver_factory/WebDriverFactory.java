@@ -54,6 +54,7 @@ class WebDriverFactory {
     }
 
     private WebDriver getFirefox(int timeoutInSeconds) {
+		WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
         WebDriver driver = ThreadGuard.protect(new FirefoxDriver(options));
         driver.manage().window().maximize();

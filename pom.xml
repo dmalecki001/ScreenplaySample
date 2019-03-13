@@ -22,6 +22,7 @@
         <assertj.version>3.9.0</assertj.version>
         <webdriver.manager.version>3.3.0</webdriver.manager.version>
         <java.faker.version>0.16</java.faker.version>
+		<browser></browser>
     </properties>
 
         <dependencies>

@@ -7,6 +7,7 @@ import net.serenitybdd.screenplay.Question;
 public class ValidationQuestions {
 
     public static Question<String> addressAlias() {
-        return actor -> MyAccountTargets.addressAlias(TestDataGenerator.getTestData().getAlias()).resolveFor(actor).getText();
+        return Question.about("the address alias").answeredBy(actor ->
+                MyAccountTargets.addressAlias(TestDataGenerator.getTestData().getAlias()).resolveFor(actor).getText());
     }
 }

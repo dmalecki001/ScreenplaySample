@@ -1,7 +1,6 @@
 package com.test.sample.utils;
 
-import com.test.sample.screenplay_pattern.jsons.JsonInstance;
-import com.test.sample.screenplay_pattern.jsons.PostId;
+import net.serenitybdd.screenplay.actors.OnStage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,16 +17,12 @@ public class TestDataManager {
         return String.valueOf(list.stream().collect(Collectors.summarizingInt(Integer::intValue)).getMax());
     }
 
-    public static JsonInstance getNewPostId(){
-        return new PostId();
+    public static TestDataGenerator getDeserializedData(){
+        return Serializer.deserialize(getPath());
     }
 
-    public static String getGuiEmail(){
-        return reader.readSpecificProperty("guiEmail");
-    }
-
-    public static String getGuiPassword(){
-        return reader.readSpecificProperty("guiPassword");
+    public static String getPath(){
+        return "target/" + OnStage.theActorInTheSpotlight().recall(KeyData.ID.getName()) + "-data.txt";
     }
 
 }

@@ -14,7 +14,7 @@ public class GetTargetRequest {
         return Tasks.instrumented(VerifyStatusCode.class, code);
     }
 
-    public static Interaction andSendIt(String resource){
+    public static Interaction andSendItTo(String resource){
         return Tasks.instrumented(GetRequest.class, resource);
     }
 }

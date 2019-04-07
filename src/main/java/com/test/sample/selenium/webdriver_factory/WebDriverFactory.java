@@ -1,28 +1,23 @@
 package com.test.sample.selenium.webdriver_factory;
 
 import com.test.sample.utils.TestDataManager;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ThreadGuard;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-class WebDriverFactory {
+public class WebDriverFactory extends AbstractWebDriverFactory {
 
     private Lock lock = new ReentrantLock();
     private int timeout = 60;
 
-    WebDriver getDriver() {
+    @Override
+    public WebDriver getWebdriver() {
         lock.lock();
-        String browser = System.getProperty("browser") != null ?
-                System.getProperty("browser").toLowerCase() :
-                TestDataManager.getReader().readSpecificProperty("browser").toLowerCase();
+        Optional<String> browserFromMaven = Optional.ofNullable(System.getProperty("browser"));
+        String browser = browserFromMaven.map(String::toString)
+                .orElse(TestDataManager.getReader().readSpecificProperty("browser"));
         try {
             switch (browser) {
                 case "chrome":
@@ -35,31 +30,7 @@ class WebDriverFactory {
         } finally {
             lock.unlock();
         }
-
     }
 
-    private WebDriver getChrome(int timeoutInSeconds) {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
-        options.addArguments("--disable-infobars");
-        options.addArguments("--disable-default-apps");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--touch-events=disabled");
-        options.setExperimentalOption("useAutomationExtension", false);
-        WebDriver driver = ThreadGuard.protect(new ChromeDriver(options));
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(timeoutInSeconds, TimeUnit.SECONDS);
-        return driver;
-    }
-
-    private WebDriver getFirefox(int timeoutInSeconds) {
-		WebDriverManager.firefoxdriver().setup();
-        FirefoxOptions options = new FirefoxOptions();
-        WebDriver driver = ThreadGuard.protect(new FirefoxDriver(options));
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(timeoutInSeconds, TimeUnit.SECONDS);
-        return driver;
-    }
 
 }

@@ -1,136 +1,74 @@
 package com.test.sample.utils;
 
 import com.github.javafaker.Faker;
+import lombok.Getter;
+import lombok.Synchronized;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class TestDataGenerator implements Serializable {
 
     private static ThreadLocal<TestDataGenerator> instanceOfDataPackage = ThreadLocal.withInitial(TestDataGenerator::new);
-    public static synchronized TestDataGenerator getTestData() {return instanceOfDataPackage.get();}
-    public static synchronized void cleanDataPackage() {
+    private static final long serialVersionUID = 531253454563L;
+
+    @Synchronized
+    public static TestDataGenerator getTestData() {
+        return instanceOfDataPackage.get();
+    }
+
+    @Synchronized
+    public static void cleanDataPackage() {
         instanceOfDataPackage.remove();
     }
 
-    private static final long serialVersionUID = 531253454563L;
-    private static final Faker faker = new Faker();
-    private String newEmailAddress;
+    transient private final Faker faker = new Faker();
+    @Getter
+    private String emailAddress;
+    @Getter
     private String firstName;
+    @Getter
     private String lastName;
-    private String newPassword;
+    @Getter
+    private String password;
+    @Getter
     private String company;
+    @Getter
     private String addressLineOne;
+    @Getter
     private String addressLineTwo;
+    @Getter
     private String city;
+    @Getter
     private String postalCode;
+    @Getter
     private String additionalInfo;
+    @Getter
     private String homePhone;
+    @Getter
     private String mobilePhone;
+    @Getter
     private String alias;
+    @Getter
     private String id;
-    private List<Integer> userIds;
-    private List<Integer> subIds;
 
-    public void generateTestData(){
-        newEmailAddress = generateRandomEmailAddress();
+    public void generateTestData() {
+        emailAddress = generateRandomEmailAddress();
         firstName = faker.name().firstName();
         lastName = faker.name().lastName();
-        newPassword = StringGenerators.generateRandomId();
+        password = StringGenerators.generateRandomUUId();
         company = faker.company().name();
         addressLineOne = faker.address().streetAddress();
         addressLineTwo = faker.address().streetAddressNumber() + "/" + faker.address().buildingNumber();
         city = faker.address().city();
-        postalCode = StringGenerators.numberBetween(10000,99999);
+        postalCode = StringGenerators.numberBetween(10000, 99999);
         additionalInfo = faker.company().url();
         homePhone = faker.phoneNumber().cellPhone();
         mobilePhone = faker.phoneNumber().cellPhone();
         alias = faker.company().buzzword();
-        id = StringGenerators.generateRandomId();
     }
 
-    private String generateRandomEmailAddress(){
+    private String generateRandomEmailAddress() {
         return faker.name().firstName() + "." + faker.name().lastName() + "@test.com";
-    }
-
-    public String getNewEmailAddress() {
-        return newEmailAddress;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public String getAddressLineOne() {
-        return addressLineOne;
-    }
-
-    public String getAddressLineTwo() {
-        return addressLineTwo;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public String getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public String getHomePhone() {
-        return homePhone;
-    }
-
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setUserIds(List<Integer> userIds) {
-        this.userIds = userIds;
-    }
-
-    public List<Integer> getUserIds() {
-        return userIds;
-    }
-
-    public List<Integer> getSubIds() {
-        return subIds;
-    }
-
-    public void setSubIds(List<Integer> subIds) {
-        this.subIds = subIds;
-    }
-
-    public String getHighestUserId() {
-        return TestDataManager.getReader().readSpecificProperty("highestUserId");
-    }
-
-    public String getHighestId() {
-        return TestDataManager.getReader().readSpecificProperty("highestId");
     }
 
 }

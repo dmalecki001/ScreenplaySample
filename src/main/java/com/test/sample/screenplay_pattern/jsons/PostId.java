@@ -1,22 +1,36 @@
 package com.test.sample.screenplay_pattern.jsons;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.test.sample.utils.TestDataGenerator;
+import com.test.sample.utils.KeyData;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import net.serenitybdd.screenplay.actors.OnStage;
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class PostId implements JsonInstance {
 
-public class PostId implements JsonInstance{
+    public static PostId preSetPostId(){
+        return new PostIdBuilder()
+                .postId(OnStage.theActorInTheSpotlight().recall(KeyData.HIGHEST_ID.getName()))
+                .id("501")
+                .name("doloribus dolores ut dolores occaecati")
+                .email("Dolly@mandy.co.uk")
+                .body("non dolor consequatur laboriosam ut deserunt")
+                .build();
+    }
 
-    private final JsonObject object = new JsonObject();
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private String postId;
+    private String id;
+    private String name;
+    private String email;
+    private String body;
 
     @Override
     public String getJson() {
-        object.addProperty("postId", TestDataGenerator.getTestData().getHighestId());
-        object.addProperty("id", 501);
-        object.addProperty("name", "doloribus dolores ut dolores occaecati");
-        object.addProperty("email", "Dolly@mandy.co.uk");
-        object.addProperty("body", "non dolor consequatur laboriosam ut deserunt");
-        return gson.toJson(object);
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(this);
     }
 }

@@ -17,7 +17,8 @@ public class LogIntoTheAccount implements Task {
     @Override
     @Step("{0} attempts to log into account")
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Click.on(LoginPageTargets.getSignInBtn()),
+        actor.attemptsTo(
+                Click.on(LoginPageTargets.getSignInBtn()),
                 Enter.theValue(authenticated(actor).username()).into(LoginPageTargets.getLoginEmailAddress()),
                 Enter.theValue(authenticated(actor).password()).into(LoginPageTargets.getPassword()),
                 Click.on(LoginPageTargets.getSignIntoTheAccountBtn()));
@@ -26,4 +27,5 @@ public class LogIntoTheAccount implements Task {
     public static LogIntoTheAccount withCredentials() {
         return Instrumented.instanceOf(LogIntoTheAccount.class).newInstance();
     }
+
 }

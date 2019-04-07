@@ -16,16 +16,17 @@ public class ProvideData {
 
     public static Performable forNewEmailRegistration(){
         return Task.where("{0} provides new email address",
-                Enter.theValue(getTestData().getNewEmailAddress()).into(getEmailAddress()),
+                Enter.theValue(getTestData().getEmailAddress()).into(getEmailAddress()),
                 Click.on(getCreateAccountBtn()));
     }
 
     public static Performable forNewPersonalInformation(){
-        return Task.where("{0} provides new personal information", Click.on(getMrBtn()),
+        return Task.where("{0} provides new personal information",
+                Click.on(getMrBtn()),
                 Enter.theValue(getTestData().getFirstName()).into(getFirstNameField()),
                 Enter.theValue(getTestData().getLastName()).into(getLastNameField()),
-                Enter.theValue(getTestData().getNewEmailAddress()).into(getEmailField()),
-                Enter.theValue(getTestData().getNewPassword()).into(getPasswordField()),
+                Enter.theValue(getTestData().getEmailAddress()).into(getEmailField()),
+                Enter.theValue(getTestData().getPassword()).into(getPasswordField()),
                 SelectFromOptions.byValue(StringGenerators.numberBetween(1,32)).from(getDays()),
                 SelectFromOptions.byValue(StringGenerators.numberBetween(1,13)).from(getMonths()),
                 SelectFromOptions.byValue(StringGenerators.getRandomYear()).from(getYears()));

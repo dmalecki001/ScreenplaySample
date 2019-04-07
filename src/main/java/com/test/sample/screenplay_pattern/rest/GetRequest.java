@@ -16,6 +16,8 @@ public class GetRequest implements Interaction {
     @Override
     @Step("{0} attempts to send the get request")
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Get.resource(resource).with(requestSpecification -> requestSpecification.contentType("application/json")));
+        actor.attemptsTo(
+                Get.resource(resource)
+                        .with(requestSpecification -> requestSpecification.contentType("application/json")));
     }
 }

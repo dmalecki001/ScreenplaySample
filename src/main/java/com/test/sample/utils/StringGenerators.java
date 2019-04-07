@@ -20,9 +20,11 @@ public class StringGenerators {
         return UUID.randomUUID().toString().replaceAll("-", "").substring(0, substring);
     }
 
-    public static String generateRandomId() {
+    public static String generateRandomUUId() {
         return getUUID(2) + getFormattedDate();
     }
+
+    public static String randomId(){return getUUID(6);}
 
     public static String numberBetween(int min, int max){
         return String.valueOf(ThreadLocalRandom.current().nextInt(max - min) + min);

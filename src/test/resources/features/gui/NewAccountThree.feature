@@ -1,23 +1,23 @@
-Feature: James attempts to register new account and log into it and add another address
+Feature: James attempts to register new account and log into it and add another address 2
 
   Background:
-    Given James can browse the web
+    Given Markus can browse the web
 
   @Smoke @Cast @Serialize
-  Scenario: James attempts to create a new account
-    Given James successfully opens the home page
+  Scenario: James attempts to create a new account 2
+    Given Markus successfully opens the home page
     When he attempts to provide data for new account registration
     Then he should verify that the account was successfully created
 
   @Smoke
-  Scenario: James tries to log into the previously created account
-    Given James successfully opens the home page
+  Scenario: James tries to log into the previously created account 2
+    Given Markus successfully opens the home page
     When he attempts to provide login data
     Then he should successfully log into the account
 
   @Smoke @Dismiss
-  Scenario: James tries to add new address to his account
-    Given James successfully opens the home page
+  Scenario: James tries to add new address to his account 2
+    Given Markus successfully opens the home page
     When he attempts to provide login data
     Then he should successfully log into the account
     Given he opens "My addresses" tab

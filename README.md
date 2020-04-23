@@ -10,9 +10,10 @@
 clean:clean verify
 ```
  - In addition, a browser (chrome,firefox) can be specified by providing the following variable.
-   By default, the project looks for it in sample.properties file which is set to chrome.
+   By default, the project looks for it in serenity.properties file which is set to chrome.
+ - Headless mode can be also set by using headlesMode property. Default is set to false.
 ```sh
-clean:clean verify -Dbrowser=firefox
+clean:clean verify -Dbrowser=firefox -DheadlessMode=true
 ```
 
 ## Reporting
